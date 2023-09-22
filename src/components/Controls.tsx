@@ -27,7 +27,7 @@ const Controls = (): JSX.Element => {
 			.then(() => {
 				toast.success("Link copied to clipboard", { className: "text-xs" });
 			})
-			.catch((error) => {
+			.catch(() => {
 				toast.error("Failed to copy link to clipboard");
 			});
 	};

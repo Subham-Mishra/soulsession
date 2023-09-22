@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes";
 
@@ -17,7 +16,7 @@ const App = (): JSX.Element => {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+			{/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
 			<RouterProvider router={router} />
 		</QueryClientProvider>
 	);

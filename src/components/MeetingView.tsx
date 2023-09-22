@@ -10,15 +10,13 @@ import ParticipantView from "./ParticipantView";
 
 const MeetingView = ({
 	onMeetingLeave,
-	meetingId,
 }: {
 	onMeetingLeave: () => void;
-	meetingId: string;
 }): JSX.Element => {
 	const [joined, setJoined] = useState<boolean>();
 	const [showProfileID, setShowProfileID] = useState<string>();
 	const [profileInfo, setProfileInfo] = useState<any>();
-	const [socketUrl, setSocketUrl] = useState("ws://localhost:8000");
+	const [socketUrl] = useState("ws://localhost:8000");
 
 	const { lastMessage } = useWebSocket(socketUrl);
 
