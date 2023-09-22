@@ -10,8 +10,9 @@ export const publicRoutes: Array<RouteObject> = [
 		children: [
 			{
 				index: true,
-				element: <AuthPage />,
+				element: <AuthPage role="coach"/>,
 			},
+			{ path: "/patient", element: <AuthPage role="patient" /> },
 			{
 				path: "*",
 				element: <ErrorPage />,

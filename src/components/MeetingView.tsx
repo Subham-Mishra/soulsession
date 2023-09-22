@@ -28,7 +28,7 @@ const MeetingView = ({
 		(participant) => participant.local
 	);
 
-	console.log(participants);
+	console.log({ participants });
 
 	return (
 		<div>
@@ -45,6 +45,7 @@ const MeetingView = ({
 					)}
 				</div>
 			)}
+			<div className="fixed right-2 top-16 h-96 w-80 rounded-lg bg-slate-50"></div>
 			<div className="fixed bottom-6 right-2">
 				{localParticipant && (
 					<ParticipantView

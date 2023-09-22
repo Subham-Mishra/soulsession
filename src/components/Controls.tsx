@@ -23,7 +23,7 @@ const Controls = (): JSX.Element => {
 
 	const handleShareLink = () => {
 		navigator.clipboard
-			.writeText(`${FRONTEND_BASE_URL}/dashboard?joinMeeting=${meetingId}`)
+			.writeText(`${FRONTEND_BASE_URL}/patient?joinMeeting=${meetingId}`)
 			.then(() => {
 				toast.success("Link copied to clipboard");
 			})
@@ -64,7 +64,7 @@ const Controls = (): JSX.Element => {
 					<BsCameraVideoOffFill className="h-5 w-5 text-white" />
 				)}
 			</Button>
-			{localStorage.getItem(ROLE) === "coach" && (
+			{sessionStorage.getItem(ROLE) === "coach" && (
 				<Button onClick={handleShareLink}>Share link</Button>
 			)}
 		</div>

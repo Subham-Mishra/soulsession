@@ -13,7 +13,7 @@ const CreateOrJoinMeetingView = ({
 	};
 	return (
 		<div className="flex flex-col items-center justify-center gap-2">
-			{localStorage.getItem(ROLE) === "coach" ? (
+			{sessionStorage.getItem(ROLE) === "coach" ? (
 				<Button onClick={onClick}>Start a session</Button>
 			) : (
 				<div className="flex gap-2">

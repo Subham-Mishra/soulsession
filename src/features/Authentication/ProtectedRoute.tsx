@@ -6,7 +6,7 @@ const ProtectedRoutes: React.FC<{ type?: "private" | "public" }> = ({
 }) => {
 	const location = useLocation();
 
-	const isLoggedIn = !!localStorage.getItem(ACCESS_TOKEN_KEY);
+	const isLoggedIn = !!sessionStorage.getItem(ACCESS_TOKEN_KEY);
 
 	if (type === "public") {
 		return isLoggedIn ? (
