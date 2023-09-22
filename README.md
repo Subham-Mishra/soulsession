@@ -2,6 +2,14 @@
 
 Deployed to vercel:-> https://soulsession.vercel.app/
 
+![Screenshot 1](/src/assets/screenshots/Screenshot%202023-09-22%20at%2011.43.39 PM.png)
+
+![Screenshot 2](/src/assets/screenshots/Screenshot%202023-09-22%20at%2011.43.57 PM.png)
+
+![Screenshot 3](/src/assets/screenshots/Screenshot%202023-09-22%20at%2011.45.14 PM.png)
+
+![Screenshot 4](/src/assets/screenshots/Screenshot%202023-09-22%20at%2011.45.52 PM.png)
+
 Built with type safety, scalability, and developer experience in mind.
 
 - [pnpm](https://pnpm.io) - A strict and efficient alternative to npm with up to 3x faster performance
