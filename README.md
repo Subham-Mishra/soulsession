@@ -33,13 +33,13 @@ If you'd like to use the included Dockerfile then [Docker](https://www.docker.co
 Getting started is a simple as cloning the repository
 
 ```
-git clone https://github.com/warpbuilds/ui-core.git
+git clone https://github.com/Subham-Mishra/soulsession.git
 ```
 
 Changing into the new directory
 
 ```
-cd ui-core
+cd soulsession
 ```
 
 Installing dependencies
@@ -53,64 +53,3 @@ And running the setup script (initializes git repository and husky)
 ```
 pnpm run setup
 ```
-
-**Note**: This repo comes with a commit-msg hook to run [Commitlint](https://commitlint.js.org/#/) on the git message. Commitlint will ensure the commit message follows the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/)
-
-## Testing
-
-Unit testing is handled by React Testing Library and Vitest 
-
-If you'd like to run all tests, Unit and E2E alike, execute the following command:
-
-```
-pnpm run test
-```
-
-### Unit Testing
-
-When running unit test scripts, it is assumed that unit tests will be colocated with the source files. Take a look at the placeholder README file in `src/components` for [an example](src/components/README.md).
-
-If you'd like to execute unit tests specifically, the below command will execute vitest:
-
-```
-pnpm run test:unit
-```
-
-If instead you are interested in coverage reporting, run:
-
-```
-pnpm run test:unit:coverage
-```
-
-All unit tests run in watch mode by default. If you'd like to disable watch mode, change the package.json test scripts with the following
-
-before:
-
-```
-"scripts": {
-  	"test:unit": "vitest src/",
-	"test:unit:coverage": "vitest --coverage src/"
-}
-```
-
-After:
-
-```
-"scripts": {
-  	"test:unit": "vitest run src/",
-	"test:unit:coverage": "vitest run --coverage src/"
-}
-```
-
-### Conventions to be followed:
-
-* All image filenames should be in Kebab case.
-* Images from figma must be exported as svg.
-* Routes should be defined in Kebab case.
-* React components should be in Pascal case.
-* Try to limit files to max 500 LOC. Split into modules.
-* Query keys should have the same name as the corresponding APIs and any identifiers if required. Example:
-  ```js
-  ["getUsers", orgId]
-  ```
-test
