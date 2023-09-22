@@ -44,6 +44,7 @@
 		"no-use-before-define": "error",
 		"require-atomic-updates": "error",
 		"camelcase": "off",
+		"@typescript-eslint/ban-ts-comment": "off",
 		"@typescript-eslint/adjacent-overload-signatures": "error",
 		"@typescript-eslint/array-type": ["error", { "default": "generic" }],
 		"@typescript-eslint/consistent-type-exports": "error",

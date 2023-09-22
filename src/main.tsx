@@ -13,9 +13,9 @@ if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<ErrorBoundary FallbackComponent={ErrorPage}>
-			<Theme accentColor="purple">
+			<Theme accentColor="indigo">
 				<App />
-				<Toaster position="top-right" />
+				<Toaster position="bottom-left" />
 			</Theme>
 		</ErrorBoundary>
 	);

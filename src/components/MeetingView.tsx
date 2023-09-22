@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { HiMiniXMark } from "react-icons/hi2";
 import useWebSocket from "react-use-websocket";
+import { mapForHumans } from "~/lib/config";
 import { usersData } from "~/mockdata";
 import Controls from "./Controls";
 import ParticipantView from "./ParticipantView";
@@ -39,7 +40,7 @@ const MeetingView = ({
 					),
 					{
 						duration: 5000,
-						position: "top-right",
+						position: "bottom-left",
 					}
 				);
 		}, 60 * 1000);
@@ -74,6 +75,11 @@ const MeetingView = ({
 	return (
 		<div>
 			<div className={profileInfo ? "w-[calc(100vw-20rem)]" : ""}>
+				{[...participants.values()].length === 1 && (
+					<div className="grid h-screen w-screen place-content-center text-white">
+						Waiting for participants to join
+					</div>
+				)}
 				{joined && (
 					<div className="flex h-full grow flex-wrap content-center justify-around gap-2">
 						{[...participants.values()].map(
@@ -91,7 +97,7 @@ const MeetingView = ({
 			</div>
 			<div>
 				{profileInfo && (
-					<div className="fixed right-2 top-28 h-96 w-72 overflow-auto rounded-lg bg-gray-700 px-2">
+					<div className="fixed right-2 top-4 h-96 w-72 overflow-auto rounded-lg bg-gray-700 px-2">
 						<div className="flex justify-between">
 							<h2 className="my-2 text-base font-semibold text-gray-200">
 								{profileInfo?.name}
@@ -107,7 +113,10 @@ const MeetingView = ({
 						<div>
 							{Object.entries(profileInfo).map(([key, value]) => (
 								<div key={key} className="text-sm leading-5 text-gray-300">
-									<span className="font-medium text-gray-200">{key}:</span>{" "}
+									<span className="font-medium text-gray-200">
+										{/*  @ts-ignore */}
+										{mapForHumans[key]}
+									</span>{" "}
 									{value as string}
 								</div>
 							))}
