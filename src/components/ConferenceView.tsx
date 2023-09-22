@@ -1,28 +1,11 @@
 import { MeetingProvider } from "@videosdk.live/react-sdk";
-import type { Participant } from "@videosdk.live/react-sdk/dist/types/participant";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AUTH_TOKEN } from "~/lib/config";
-import { USER } from "~/lib/constants";
-import { usersData } from "~/mockdata";
+import { ID, USER } from "~/lib/constants";
 import { createMeeting } from "~/queries";
 import CreateOrJoinMeetingView from "./CreateOrJoinMeetingView";
 import MeetingView from "./MeetingView";
-
-//iterate over mockdata array of objects and find a user which doesnt already exists in participants
-//if all ids are taken, return null
-const getNewRandomParticipant = (participants: Map<string, Participant>) => {
-	console.log({ participants });
-	const ids = new Set(
-		[...participants.values()].map((participant) => participant.id)
-	);
-	for (const user of usersData) {
-		if (!ids.has(user.id)) {
-			return user;
-		}
-	}
-	return null;
-};
 
 const ConferenceView = (): JSX.Element => {
 	const [meetingId, setMeetingId] = useState<string | null>(null);
@@ -60,6 +43,7 @@ const ConferenceView = (): JSX.Element => {
 							name: sessionStorage.getItem(USER) || "",
 							micEnabled: false,
 							webcamEnabled: false,
+							participantId: sessionStorage.getItem(ID) || "",
 						}}
 						token={AUTH_TOKEN}
 						joinWithoutUserInteraction

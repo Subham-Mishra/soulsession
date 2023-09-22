@@ -1,22 +1,27 @@
 import { useParticipant } from "@videosdk.live/react-sdk";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
 	BsCameraVideoOffFill,
 	BsFillMicMuteFill,
 	BsInfoCircleFill,
 } from "react-icons/bs";
 import ReactPlayer from "react-player";
+import { usersData } from "~/mockdata";
 
-const ParticipantView = (props: { participantId: string }): JSX.Element => {
+const ParticipantView = (props: {
+	participantId: string;
+	setShowProfileID?: React.Dispatch<React.SetStateAction<string | undefined>>;
+}): JSX.Element => {
+	const { participantId, setShowProfileID } = props;
 	const micRef = useRef(null);
-	const [showProfileInfo, setShowProfileInfo] = useState<string>();
 
-	const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
-		useParticipant(props.participantId);
+	const { webcamStream, micStream, webcamOn, micOn, isLocal } =
+		useParticipant(participantId);
+
+	const participantInfo = usersData.find((user) => user.id === participantId);
 
 	const toggleProfileInfo = () => {
-		setShowProfileInfo(props.participantId);
-		console.log("toggleProfileInfo");
+		setShowProfileID && setShowProfileID(participantId);
 	};
 
 	const videoStream = useMemo(() => {
@@ -51,6 +56,11 @@ const ParticipantView = (props: { participantId: string }): JSX.Element => {
 				className="absolute left-4 top-4 z-[100] h-5 w-5 cursor-pointer text-gray-600"
 				onClick={toggleProfileInfo}
 			/>
+			{participantInfo && (
+				<p className="absolute left-12 top-4 text-sm font-medium text-white">
+					{participantInfo?.name}
+				</p>
+			)}
 			{!micOn && (
 				<BsFillMicMuteFill className="absolute right-4 top-4 h-6 w-6 text-gray-600" />
 			)}

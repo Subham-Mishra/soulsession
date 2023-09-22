@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import { Toaster } from "react-hot-toast";
 import App from "./App.tsx";
-import ErrorPage from "./pages/ErrorPage";
+import ErrorPage from "./pages/ErrorPage/index.tsx";
 import "./styles/index.css";
 import "./styles/tailwind.css";
 
