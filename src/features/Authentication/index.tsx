@@ -1,11 +1,13 @@
 import { Button } from "@radix-ui/themes";
 import type React from "react";
 import { Link } from "react-router-dom";
-import { ACCESS_TOKEN_KEY } from "~/lib/constants";
+import { ACCESS_TOKEN_KEY, ROLE, USER } from "~/lib/constants";
 
 const handleLogin = (): void => {
-	// TODO: ACCESS_TOKEN_KEY has to be fetched from Auth API.
+	// TODO: values are to be fetched from Auth API.
 	localStorage.setItem(ACCESS_TOKEN_KEY, "JNJDNUBFINKMSENFBFJBNSJNE");
+	localStorage.setItem(USER, "Subham");
+	localStorage.setItem(ROLE, "coach");
 };
 
 const AuthPage: React.FC = (): JSX.Element => {

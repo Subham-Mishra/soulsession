@@ -5,35 +5,11 @@ import {
 } from "@videosdk.live/react-sdk";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
-
-const Controls = () => {
-	const { leave, toggleMic, toggleWebcam } = useMeeting();
-	return (
-		<div>
-			<button
-				onClick={() => {
-					leave();
-				}}
-			>
-				Leave
-			</button>
-			<button
-				onClick={() => {
-					toggleMic();
-				}}
-			>
-				toggleMic
-			</button>
-			<button
-				onClick={() => {
-					toggleWebcam();
-				}}
-			>
-				toggleWebcam
-			</button>
-		</div>
-	);
-};
+import { useSearchParams } from "react-router-dom";
+import { AUTH_TOKEN } from "~/lib/config";
+import { USER } from "~/lib/constants";
+import Controls from "./Controls";
+import CreateOrJoinMeetingView from "./CreateOrJoinMeetingView";
 
 const ParticipantView = (props: { participantId: string }) => {
 	const micRef = useRef(null);
@@ -66,8 +42,7 @@ const ParticipantView = (props: { participantId: string }) => {
 	}, [micStream, micOn]);
 
 	return (
-		<div>
-			<Controls />
+		<div className="flex h-[12rem] w-[20rem] grow items-center justify-center rounded-lg bg-gray-900 px-0.5">
 			<audio ref={micRef} autoPlay playsInline muted={isLocal} />
 			{webcamOn && (
 				<ReactPlayer
@@ -78,8 +53,8 @@ const ParticipantView = (props: { participantId: string }) => {
 					muted={true}
 					playing={true}
 					url={videoStream as MediaStream}
-					height={"300px"}
-					width={"300px"}
+					height={"400px"}
+					width={"400px"}
 					onError={(error) => {
 						console.log(error, "participant video error");
 					}}
@@ -89,55 +64,130 @@ const ParticipantView = (props: { participantId: string }) => {
 	);
 };
 
-const MeetingView = () => {
+const MeetingView = ({
+	onMeetingLeave,
+	meetingId,
+}: {
+	onMeetingLeave: () => void;
+	meetingId: string;
+}) => {
 	const [joined, setJoined] = useState<string>();
 	//Get the method which will be used to join the meeting.
 	//We will also get the participants list to display all participants
-	const { join, participants } = useMeeting({
+	const { participants } = useMeeting({
 		//callback for when meeting is joined successfully
 		onMeetingJoined: () => {
 			setJoined("JOINED");
 		},
+		//callback for when meeting is left
+		onMeetingLeft: () => {
+			onMeetingLeave();
+		},
 	});
-	const joinMeeting = () => {
-		setJoined("JOINING");
-		join();
-	};
+
+	const localParticipant = [...participants.values()].find(
+		(participant) => participant.local
+	);
+
+	console.log(participants);
 
 	return (
-		<div className="container">
-			{joined && joined == "JOINED" ? (
-				<div>
-					<Controls />
-					{[...participants.keys()].map((participantId) => (
-						<ParticipantView
-							participantId={participantId}
-							key={participantId}
-						/>
-					))}
+		<div>
+			{joined && joined == "JOINED" && (
+				<div className="flex h-full w-full flex-wrap content-center justify-around gap-6">
+					{[...participants.values()].map(
+						(participant) =>
+							!participant.local && (
+								<ParticipantView
+									participantId={participant.id}
+									key={participant.id}
+								/>
+							)
+					)}
 				</div>
-			) : joined && joined == "JOINING" ? (
-				<p>Joining the meeting...</p>
-			) : (
-				<button onClick={joinMeeting}>Join the meeting</button>
 			)}
+			<div className="fixed bottom-6 right-2">
+				{localParticipant && (
+					<ParticipantView
+						participantId={localParticipant.id}
+						key={localParticipant.id}
+					/>
+				)}
+			</div>
+			<div className="fixed bottom-2 left-0 w-full">
+				<Controls />
+			</div>
 		</div>
 	);
 };
 
+// API call to create meeting
+export const createMeeting = async ({
+	authToken,
+}: {
+	authToken: string;
+}): Promise<string> => {
+	const response = await fetch(`https://api.videosdk.live/v2/rooms`, {
+		method: "POST",
+		headers: {
+			authorization: `${authToken}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({}),
+	});
+	const responseObject = await response.json();
+	const { roomId } = responseObject as { roomId: string };
+	return roomId;
+};
+
 const ConferenceView = (): JSX.Element => {
+	const [searchParameters] = useSearchParams();
+	const joinMeetingId = searchParameters.get("joinMeeting") || "";
+	const [meetingId, setMeetingId] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (joinMeetingId) {
+			setMeetingId(joinMeetingId);
+		}
+	}, [joinMeetingId]);
+
+	//Getting the meeting id by calling the api
+	const getMeetingAndToken = async (id?: string) => {
+		const meetingId =
+			id == null ? await createMeeting({ authToken: AUTH_TOKEN }) : id;
+		setMeetingId(meetingId);
+	};
+
+	//This will set Meeting Id to null when meeting is left or ended
+	const onMeetingLeave = () => {
+		setMeetingId(null);
+	};
+
+	console.log(meetingId, searchParameters.get("joinMeeting"));
 	return (
-		<MeetingProvider
-			config={{
-				meetingId: "kap9-7gu9-43i2",
-				micEnabled: true,
-				webcamEnabled: true,
-				name: "Subham's Org",
-			}}
-			token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiI3OGU0ZTBkZi0yZGJkLTRmNmItODk3OS1hMWVlNTAxYzIwMzEiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTY5NTM2MDExMywiZXhwIjoxNjk1NDQ2NTEzfQ.xXsqLiaUB4lhJx_sIO7pwbTwK8j-qaOvm9Htj25oWJI"
-		>
-			<MeetingView />
-		</MeetingProvider>
+		<div className="grid  place-content-center">
+			{AUTH_TOKEN && meetingId ? (
+				<>
+					<MeetingProvider
+						config={{
+							meetingId,
+							name: localStorage.getItem(USER) || "",
+							micEnabled: true,
+							webcamEnabled: true,
+						}}
+						token={AUTH_TOKEN}
+						joinWithoutUserInteraction
+					>
+						<MeetingView
+							meetingId={meetingId}
+							onMeetingLeave={onMeetingLeave}
+						/>
+					</MeetingProvider>
+				</>
+			) : (
+				<CreateOrJoinMeetingView getMeetingAndToken={getMeetingAndToken} />
+			)}
+		</div>
 	);
 };
 
