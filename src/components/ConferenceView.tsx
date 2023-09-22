@@ -46,10 +46,7 @@ const ConferenceView = (): JSX.Element => {
 						token={AUTH_TOKEN}
 						joinWithoutUserInteraction
 					>
-						<MeetingView
-							meetingId={meetingId}
-							onMeetingLeave={onMeetingLeave}
-						/>
+						<MeetingView onMeetingLeave={onMeetingLeave} />
 					</MeetingProvider>
 				</>
 			) : (
