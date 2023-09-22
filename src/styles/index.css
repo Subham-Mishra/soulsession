@@ -1,0 +1,11 @@
+body {
+	font-family: "Inter", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	height: 100vh !important;
+	margin: 0;
+}
+
+.radix-themes {
+	--default-font-family: var(--font-inter);
+}
