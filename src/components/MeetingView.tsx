@@ -73,54 +73,58 @@ const MeetingView = ({
 
 	return (
 		<div>
-			{joined && (
-				<div className="mt-8 flex h-full  w-full flex-wrap content-center justify-around gap-6">
-					{[...participants.values()].map(
-						(participant) =>
-							!participant.local && (
-								<ParticipantView
-									setShowProfileID={setShowProfileID}
-									participantId={participant.id}
-									key={participant.id}
-								/>
-							)
-					)}
-				</div>
-			)}
-			{profileInfo && (
-				<div className="fixed right-2 top-28 h-96 w-80 overflow-auto rounded-lg bg-gray-700 px-2">
-					<div className="flex justify-between">
-						<h2 className="my-2 text-base font-semibold text-gray-200">
-							{profileInfo?.name}
-						</h2>
-						<HiMiniXMark
-							className="mt-2 h-5 w-5 cursor-pointer text-gray-300"
-							onClick={() => {
-								setShowProfileID("");
-								setProfileInfo(null);
-							}}
-						/>
+			<div className={profileInfo ? "w-[calc(100vw-20rem)]" : ""}>
+				{joined && (
+					<div className="flex h-full grow flex-wrap content-center justify-around gap-2">
+						{[...participants.values()].map(
+							(participant) =>
+								!participant.local && (
+									<ParticipantView
+										setShowProfileID={setShowProfileID}
+										participantId={participant.id}
+										key={participant.id}
+									/>
+								)
+						)}
 					</div>
-					<div>
-						{Object.entries(profileInfo).map(([key, value]) => (
-							<div key={key} className="text-sm leading-5 text-gray-300">
-								<span className="font-medium text-gray-200">{key}:</span>{" "}
-								{value as string}
-							</div>
-						))}
-					</div>
-				</div>
-			)}
-			<div className="fixed bottom-6 right-2">
-				{localParticipant && (
-					<ParticipantView
-						participantId={localParticipant.id}
-						key={localParticipant.id}
-					/>
 				)}
 			</div>
-			<div className="fixed bottom-2 left-0 w-full">
-				<Controls />
+			<div>
+				{profileInfo && (
+					<div className="fixed right-2 top-28 h-96 w-72 overflow-auto rounded-lg bg-gray-700 px-2">
+						<div className="flex justify-between">
+							<h2 className="my-2 text-base font-semibold text-gray-200">
+								{profileInfo?.name}
+							</h2>
+							<HiMiniXMark
+								className="mt-2 h-5 w-5 cursor-pointer text-gray-300"
+								onClick={() => {
+									setShowProfileID("");
+									setProfileInfo(null);
+								}}
+							/>
+						</div>
+						<div>
+							{Object.entries(profileInfo).map(([key, value]) => (
+								<div key={key} className="text-sm leading-5 text-gray-300">
+									<span className="font-medium text-gray-200">{key}:</span>{" "}
+									{value as string}
+								</div>
+							))}
+						</div>
+					</div>
+				)}
+				<div className="fixed bottom-2 right-2">
+					{localParticipant && (
+						<ParticipantView
+							participantId={localParticipant.id}
+							key={localParticipant.id}
+						/>
+					)}
+				</div>
+				<div className="fixed bottom-2 left-0 w-full">
+					<Controls />
+				</div>
 			</div>
 		</div>
 	);

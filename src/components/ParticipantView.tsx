@@ -69,7 +69,7 @@ const ParticipantView = (props: {
 			)}
 			{webcamOn && (
 				<ReactPlayer
-					playsinline // very very imp prop
+					playsinline
 					pip={false}
 					light={false}
 					controls={false}

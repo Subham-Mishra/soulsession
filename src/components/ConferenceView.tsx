@@ -31,10 +31,8 @@ const ConferenceView = (): JSX.Element => {
 		setMeetingId(null);
 	};
 
-	console.log({ meetingId, AUTH_TOKEN });
-
 	return (
-		<div className="grid  place-content-center">
+		<div>
 			{AUTH_TOKEN && meetingId ? (
 				<>
 					<MeetingProvider
