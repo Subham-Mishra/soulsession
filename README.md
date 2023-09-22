@@ -48,8 +48,8 @@ Installing dependencies
 pnpm install
 ```
 
-And running the setup script (initializes git repository and husky)
+To run the project
 
 ```
-pnpm run setup
+pnpm dev
 ```
