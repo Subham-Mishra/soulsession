@@ -6,6 +6,35 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
+const Controls = () => {
+	const { leave, toggleMic, toggleWebcam } = useMeeting();
+	return (
+		<div>
+			<button
+				onClick={() => {
+					leave();
+				}}
+			>
+				Leave
+			</button>
+			<button
+				onClick={() => {
+					toggleMic();
+				}}
+			>
+				toggleMic
+			</button>
+			<button
+				onClick={() => {
+					toggleWebcam();
+				}}
+			>
+				toggleWebcam
+			</button>
+		</div>
+	);
+};
+
 const ParticipantView = (props: { participantId: string }) => {
 	const micRef = useRef(null);
 	const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
@@ -38,6 +67,7 @@ const ParticipantView = (props: { participantId: string }) => {
 
 	return (
 		<div>
+			<Controls />
 			<audio ref={micRef} autoPlay playsInline muted={isLocal} />
 			{webcamOn && (
 				<ReactPlayer
@@ -78,6 +108,7 @@ const MeetingView = () => {
 		<div className="container">
 			{joined && joined == "JOINED" ? (
 				<div>
+					<Controls />
 					{[...participants.keys()].map((participantId) => (
 						<ParticipantView
 							participantId={participantId}
