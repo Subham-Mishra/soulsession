@@ -50,7 +50,7 @@ const ParticipantView = (props: {
 	}, [micStream, micOn]);
 
 	return (
-		<div className="relative flex h-[12rem] w-[20rem] grow items-center justify-center rounded-lg border border-gray-200 p-1">
+		<div className="relative flex h-[12rem] w-[20rem] grow items-center justify-center rounded-lg border border-gray-600 p-1">
 			<audio ref={micRef} autoPlay playsInline muted={isLocal} />
 			<BsInfoCircleFill
 				className="absolute left-4 top-4 z-[100] h-5 w-5 cursor-pointer text-gray-600"

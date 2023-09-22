@@ -15,7 +15,7 @@ if (!rootElement.innerHTML) {
 		<ErrorBoundary FallbackComponent={ErrorPage}>
 			<Theme accentColor="purple">
 				<App />
-				<Toaster position="bottom-right" />
+				<Toaster position="top-right" />
 			</Theme>
 		</ErrorBoundary>
 	);

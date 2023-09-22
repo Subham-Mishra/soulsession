@@ -25,7 +25,7 @@ const Controls = (): JSX.Element => {
 		navigator.clipboard
 			.writeText(`${FRONTEND_BASE_URL}/patient?joinMeeting=${meetingId}`)
 			.then(() => {
-				toast.success("Link copied to clipboard");
+				toast.success("Link copied to clipboard", { className: "text-xs" });
 			})
 			.catch((error) => {
 				toast.error("Failed to copy link to clipboard");
@@ -35,7 +35,7 @@ const Controls = (): JSX.Element => {
 	return (
 		<div className="flex justify-center gap-2">
 			<Button
-				color="gray"
+				color="red"
 				onClick={() => {
 					leave();
 				}}
