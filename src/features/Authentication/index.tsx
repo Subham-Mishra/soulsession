@@ -42,7 +42,7 @@ const AuthPage = ({ role }: { role: "coach" | "patient" }): JSX.Element => {
 				{role === "patient" && (
 					<>
 						<TextField.Input
-							placeholder="Enter your patient id"
+							placeholder="Enter patientId (1-10)"
 							value={patientId}
 							onChange={(event) => {
 								setPatientId(event.target.value);
